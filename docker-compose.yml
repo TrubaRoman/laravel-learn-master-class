@@ -54,6 +54,16 @@ services:
     networks:
       - app-network
 
+#Node
+
+  node:
+    build:
+      context: ./
+      dockerfile: dockerfiles/node-image
+    volumes:
+      - ./:/var/www
+    tty: true
+
 #Docker Networks
 networks:
   app-network:
