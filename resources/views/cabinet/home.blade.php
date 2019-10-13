@@ -2,10 +2,15 @@
 
 @section('content')
 
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{route('home')}}">home</a></li>
+        <li class="breadcrumb-item">Cabinet</li>
+    </ul>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Home page</div>
+                <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +19,7 @@
                         </div>
                     @endif
 
-                    Your site
+                    You are logged in!
                 </div>
             </div>
         </div>
