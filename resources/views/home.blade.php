@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('breadcrumb','')
 
 @section('content')
 
@@ -8,15 +9,10 @@
                 <div class="card-header">Home page</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
                     Your site
                 </div>
             </div>
-        </div>
+    </div>
     </div>
 @endsection

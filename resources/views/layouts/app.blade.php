@@ -72,6 +72,8 @@
     </header>
         <main class="app-content py-3">
             <div class="container">
+                @section('breadcrumb', Breadcrumbs::render())
+                @yield('breadcrumb')
                 @include('layouts.partials.alert')
                 @yield('content')
             </div>
