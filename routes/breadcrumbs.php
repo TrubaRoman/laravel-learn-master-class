@@ -36,3 +36,31 @@
         $trail->push('Cabinet', route('cabinet'));
     });
 
+ //////////////////////__ADMIN_////////
+
+
+    Breadcrumbs::for('admin.home',function($trail){
+        $trail->parent('home');
+        $trail->push('Admin',route('admin.home'));
+    });
+
+    Breadcrumbs::for('admin.users.index',function ($trail){
+       $trail->parent('admin.home');
+       $trail->push('Users', route('admin.users.index'));
+    });
+
+    Breadcrumbs::for('admin.users.create',function ($trail){
+        $trail->parent('admin.users.index');
+        $trail->push('Create',route('admin.users.create'));
+    });
+
+    Breadcrumbs::for('admin.users.show',function ($trail,User $user){
+        $trail->parent('admin.users.index');
+        $trail->push($user->name, route('admin.users.show',$user));
+    });
+
+    Breadcrumbs::for('admin.users.edit',function ($trail,User $user){
+        $trail->parent('admin.users.show',$user);
+        $trail->push('Edit',route('admin.users.edit',$user));
+    });
+
