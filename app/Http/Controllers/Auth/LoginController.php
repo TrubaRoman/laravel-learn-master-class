@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\User;
+use App\Http\Requests\Auth\LoginRequest;
 
 class LoginController extends Controller
 {
@@ -20,7 +22,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use ThrottlesLogins;
 
@@ -36,12 +38,9 @@ class LoginController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-       $this->velidate($request,[
-           'email' => 'required|string',
-           'password' => 'required|string'
-       ]);
+
 
        if ($this->hasTooManyLoginAttempts($request)){
            $this->fireLockoutEvent($request);

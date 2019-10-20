@@ -20,3 +20,25 @@ Auth::routes();
 Route::get('/verify/{token}','Auth\RegisterController@verify')->name('register.verify');
 
 Route::get('/cabinet', 'Cabinet\HomeController@index')->name('cabinet');
+
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::namespace('Admin')->group(function () {
+            Route::get('/','HomeController@index')->name('admin.home');
+            Route::resource('users','UsersController') ;
+        });
+    });
+});
+
+Route::group(
+    [
+        'prefix' => 'admin',
+        'as'    => 'admin.',
+        'namespace'  => 'Admin',
+        'middleware' => ['auth'],
+    ],
+    function () {
+        Route::get('/','HomeController@index')->name('home');
+        Route::resource('users','UsersController') ;
+    }
+);
