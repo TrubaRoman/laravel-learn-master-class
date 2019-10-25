@@ -1,4 +1,4 @@
-@extends('layouts.app)
+@extends('admin.layouts.admin_app')
 
 @section('content')
     <ul class="nan nav-tabs mb-3">

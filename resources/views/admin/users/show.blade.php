@@ -4,8 +4,8 @@
     @include('admin.users._nav')
 
     <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.users.edit',$user) }}" class="btn btn-primary mr-1"></a>
-        <form action="POST" action="{{ route('admin.users.update',$user) }}" class="mr-1">
+        <a href="{{ route('admin.users.edit',$user) }}" class="btn btn-primary mr-1"> Edit</a>
+        <form method="POST" action="{{ route('admin.users.update',$user) }}" class="mr-1">
             @csrf
             @method('DELETE')
             <button class="btn btn-danger">Delete</button>
@@ -17,10 +17,10 @@
             <th>ID</th> <td>{{ $user->id }}</td>
         </tr>
         <tr>
-            <th>ID</th> <td>{{ $user->name}}</td>
+            <th>Name</th> <td>{{ $user->name}}</td>
         </tr>
         <tr>
-            <th>ID</th> <td>{{ $user->email}}</td>
+            <th>Email</th> <td>{{ $user->email}}</td>
         </tr>
         <tr>
             <th>Status</th>

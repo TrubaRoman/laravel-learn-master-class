@@ -1,4 +1,6 @@
 <?php
+    use App\Models\User;
+    use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Crumbs;
 
 // Home
     Breadcrumbs::for('home', function ($trail) {

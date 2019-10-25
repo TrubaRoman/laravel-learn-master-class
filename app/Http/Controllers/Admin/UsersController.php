@@ -2,9 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Users\CreateRequest;
+use App\Http\Requests\Admin\Users\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
+/**
+ * Class UsersController
+ * @package App\Http\Controllers\Admin
+ * @property User $user
+ */
 
 class UsersController extends Controller
 {
@@ -26,20 +36,15 @@ class UsersController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $this->validate($request,[
-            'name'=> 'required|string|max:225',
-            'email'=> 'required|string|email|max:225|unique:users',
-        ]);
 
-        $user = User::create([
-            'name'=> $request['name'],
-            'email'=> $request['email'],
-            'status' => User::STATUS_ACTIVE,
-        ]);
+        $user = User::create($request->only(['name','email']) + [
+                'password'=> bcrypt(Str::random()),
+                'status' => User::STATUS_ACTIVE,
+            ]);
 
-        return redirect()->route('admin.users.show',['id'=> $user->id]);
+        return redirect()->route('admin.users.show',$user);
     }
 
 
@@ -56,29 +61,24 @@ class UsersController extends Controller
             User::STATUS_WAIT => 'Waiting',
             User::STATUS_ACTIVE => 'Active',
         ];
-
         return view('admin.users.edit',compact('user','statuses'));
     }
 
 
-    public function update(Request $request, User $user)
+    public function update(UpdateRequest $request, User $user)
     {
-        $data = $this->validate($request,[
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:225|unique:users,id'. $user->id,
-            'status' => ['required','string', Rule::in([User::STATUS_WAIT, User::STATUS_ACTIVE])],
-        ]);
 
-        $user->update($data);
+        $user->update($request->only(['name','email','status']));
 
-        return redirect()->route('admin.users.show');
+        return redirect()->route('admin.users.show',$user);
     }
 
 
     public function destroy(User $user)
     {
+
         $user->delete();
 
-        return redirect()->route('admin.users.route');
+        return redirect()->route('admin.users.index');
     }
 }

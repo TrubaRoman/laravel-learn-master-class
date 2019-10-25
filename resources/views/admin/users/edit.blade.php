@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin_app')
 
 @section('content')
-    @include('admin.users._naw')
+    @include('admin.users._nav')
 <h2>Update user</h2>
     <form method="post" action="{{route('admin.users.update',$user)}}">
         @csrf
@@ -28,10 +28,10 @@
             <label for="status" class="col-form-label">Status</label>
             <select name="status" id="status" type="email" class="form-control{{$errors->has('status') ? ' is_invalid': ' '}}">
                 @foreach($statuses as $value => $label)
-                    <option value="{{$value}}"{{$value === old('status',$user->status) ? ' selected': ''}}>{{$label}}</option>
+                    <option value="{{ $value }}"{{ $value === old('status',$user->status) ? ' selected': ''}}>{{ $label }}</option>
                 @endforeach
             </select>
-            @if($error->has('email'))
+            @if($errors->has('email'))
                 <span class="invalid-feedback"><strong>{{$errors->first('status')}}</strong></span>
             @endif
         </div>

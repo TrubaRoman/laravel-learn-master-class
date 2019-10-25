@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin_app')
 
 @section('content')
-    @include('admin.users._naw')
+    @include('admin.users._nav')
 <h2>Create user</h2>
     <form method="post" action="{{route('admin.users.store')}}">
         @csrf
