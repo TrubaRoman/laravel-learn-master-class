@@ -4,11 +4,15 @@
     @include('admin.users._nav')
 
     <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.users.edit',$user) }}" class="btn btn-primary mr-1"> Edit</a>
+        <a href="{{ route('admin.users.edit',$user) }}" class="btn btn-primary  mr-1"> Edit</a>
 
-        <form method="POST" action="{{ route('admin.users.verify',$user) }}" class="mr-1">
+        <form method="POST" action="{{ route('admin.users.verify',$user) }}" class="mr-1 ">
             @csrf
-            <button class="btn btn-success">Verify</button>
+            @if($user->isActive())
+                <button class="btn btn-dark mr-1">Wait</button>
+                @else
+            <button class="btn btn-success mr-1">Verify</button>
+                @endif
         </form>
 
         <form method="POST" action="{{ route('admin.users.update',$user) }}" class="mr-1">

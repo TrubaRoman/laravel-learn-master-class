@@ -4,4 +4,4 @@
 
 </ul>
 
-<a href="{{ route('admin.users.create') }}" class="btn btn-info  mb-xl-3" > Create</a>
+<a href="{{ route('admin.users.create') }}" class="btn btn-info  mb-3" > Create</a>

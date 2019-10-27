@@ -83,7 +83,7 @@ class UsersController extends Controller
 
         $user->statusToggle();
 
-        return redirect()->route('admin.users.show',$user);
+        return redirect()->back();
     }
 
 }

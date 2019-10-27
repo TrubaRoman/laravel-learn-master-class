@@ -3,12 +3,14 @@
 @section('content')
     @include('admin.users._nav')
 <h2>Update user</h2>
-    <form method="POST" action="{{ route('admin.users.verify',$user) }}" class="mr-1">
+    <form method="POST" action="{{ route('admin.users.verify',$user) }}" class="mb-3">
         @csrf
         @if($user->isActive())
-        <button class="btn btn-dark">Wait</button>
+            <label for="" class="alert-success ml-2 p-2">User is active</label>
+        <button class="btn btn-dark float-right">No Activate</button>
             @else
-            <button class="btn btn-success">Active</button>
+            <label for="" class="alert-danger ml-2 p-2"> User is no active</label>
+            <button class="btn btn-success float-right ">Activate</button>
             @endif
     </form>
     <form method="post" action="{{route('admin.users.update',$user)}}">
