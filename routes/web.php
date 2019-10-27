@@ -21,14 +21,14 @@ Route::get('/verify/{token}','Auth\RegisterController@verify')->name('register.v
 
 Route::get('/cabinet', 'Cabinet\HomeController@index')->name('cabinet');
 
-Route::prefix('admin')->group(function () {
-    Route::middleware('auth')->group(function () {
-        Route::namespace('Admin')->group(function () {
-            Route::get('/','HomeController@index')->name('admin.home');
-            Route::resource('users','UsersController') ;
-        });
-    });
-});
+//Route::prefix('admin')->group(function () {
+//    Route::middleware('auth')->group(function () {
+//        Route::namespace('Admin')->group(function () {
+//            Route::get('/','HomeController@index')->name('admin.home');
+//            Route::resource('users','UsersController') ;
+//        });
+//    });
+//});
 
 Route::group(
     [
@@ -40,5 +40,6 @@ Route::group(
     function () {
         Route::get('/','HomeController@index')->name('home');
         Route::resource('users','UsersController') ;
+        Route::post('/users/{user}/verify','UsersController@verify')->name('users.verify');
     }
 );

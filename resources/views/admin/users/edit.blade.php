@@ -3,6 +3,14 @@
 @section('content')
     @include('admin.users._nav')
 <h2>Update user</h2>
+    <form method="POST" action="{{ route('admin.users.verify',$user) }}" class="mr-1">
+        @csrf
+        @if($user->isActive())
+        <button class="btn btn-dark">Wait</button>
+            @else
+            <button class="btn btn-success">Active</button>
+            @endif
+    </form>
     <form method="post" action="{{route('admin.users.update',$user)}}">
         @csrf
         @method('PUT')
@@ -24,17 +32,7 @@
             @endif
         </div>
 
-        <div class="form-group">
-            <label for="status" class="col-form-label">Status</label>
-            <select name="status" id="status" type="email" class="form-control{{$errors->has('status') ? ' is_invalid': ' '}}">
-                @foreach($statuses as $value => $label)
-                    <option value="{{ $value }}"{{ $value === old('status',$user->status) ? ' selected': ''}}>{{ $label }}</option>
-                @endforeach
-            </select>
-            @if($errors->has('email'))
-                <span class="invalid-feedback"><strong>{{$errors->first('status')}}</strong></span>
-            @endif
-        </div>
+
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Save</button>
