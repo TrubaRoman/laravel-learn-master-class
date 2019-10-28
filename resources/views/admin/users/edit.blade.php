@@ -2,14 +2,13 @@
 
 @section('content')
     @include('admin.users._nav')
-<h2>Update user</h2>
     <form method="POST" action="{{ route('admin.users.verify',$user) }}" class="mb-3">
         @csrf
         @if($user->isActive())
-            <label for="" class="alert-success ml-2 p-2">User is active</label>
+            <label for="" class="alert-success  p-2">User is active</label>
         <button class="btn btn-dark float-right">No Activate</button>
             @else
-            <label for="" class="alert-danger ml-2 p-2"> User is no active</label>
+            <label for="" class="alert-danger  p-2"> User is no active</label>
             <button class="btn btn-success float-right ">Activate</button>
             @endif
     </form>
@@ -19,7 +18,7 @@
 
         <div class="form-group">
             <label for="name" class="col-form-label">Name</label>
-            <input id="name" class="form-controll{{ $errors->has('name') ? ' is-invalid' : ' ' }}" name="name"
+            <input id="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : ' ' }}" name="name"
                    value="{{old('name',$user->name)}}" required>
             @if($errors->has('name'))
                 <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>

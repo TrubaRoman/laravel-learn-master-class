@@ -6,14 +6,19 @@
 
     use App\Models\User;
     use App\Http\Controllers\Controller;
+    use App\UseCases\Auth\RegisterService;
     use Illuminate\Auth\Events\Registered;
     use Illuminate\Support\Facades\Mail;
     use Illuminate\Support\Str;
     class RegisterController extends Controller
     {
-        public function __construct()
+        private $service;
+
+
+        public function __construct(RegisterService $service )
         {
             $this->middleware('guest');
+            $this->service = $service;
         }
         public function showRegistrationForm()
         {
@@ -21,15 +26,7 @@
         }
         public function register(RegisterRequest $request)
         {
-           $user = User::register(
-               $request['name'],
-               $request['email'],
-               $request['password']
-           );
-
-            Mail::to($user->email)->send(new VerifyMail($user));
-            event(new Registered($user));
-
+            $this->service->register($request);
             return redirect()->route('login')
                 ->with('success', 'Check your email and click on the link to verify.');
         }
@@ -42,7 +39,7 @@
             }
 
             try{
-                $user->verify();
+                $this->service->verify($user->id);
                 return redirect()-> route('login')
                     ->with('success','You email is verified. You can now login.');
 
