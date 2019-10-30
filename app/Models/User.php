@@ -13,6 +13,8 @@ use Str;
   * @property string $email
   * @property string $status
  * @property string $password
+ * @property string verify_token
+ *
  */
 
 class User extends Authenticatable
@@ -24,7 +26,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password','status'
+        'name', 'email', 'password','status','verify_token'
     ];
 
 

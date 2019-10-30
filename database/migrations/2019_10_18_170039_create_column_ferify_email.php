@@ -17,6 +17,10 @@ class CreateColumnFerifyEmail extends Migration
             $table->string('status',16)->nullable();
             $table->string('verify_token')->nullable()->unique();
         });
+
+        DB::table('users')->update([
+            'status' => 'active'
+        ]);
     }
 
     /**
