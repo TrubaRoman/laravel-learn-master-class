@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use http\Exception\InvalidArgumentException;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +14,8 @@ use Str;
   * @property string $email
   * @property string $status
  * @property string $password
- * @property string verify_token
+ * @property string $verify_token
+ * @property string $role
  *
  */
 
@@ -24,9 +26,15 @@ class User extends Authenticatable
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
 
+    public const  ROLE_USER = 'user';
+    public const ROLE_ADMIN = 'admin';
+
+
+
+
 
     protected $fillable = [
-        'name', 'email', 'password','status','verify_token'
+        'name', 'email', 'password','status','verify_token','role'
     ];
 
 
@@ -104,4 +112,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function changeRole($role) :void
+    {
+        if (!\in_array($role, [self::ROLE_USER, self::ROLE_ADMIN],true))
+        {
+            throw new \InvalidArgumentException('Undefined role"'. $role . '"');
+        }
+
+        if ($this->role === $role)
+        {
+            throw new \DomainException('Role is already assigned.');
+        }
+
+        $this->update(['role' => $role]);
+    }
+
+    public function isAdmin() :bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
 }
