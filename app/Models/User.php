@@ -42,13 +42,34 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public static function roleList()
+    public static function roleList() :array
     {
         return [
             self::ROLE_USER => 'User',
             self::ROLE_ADMIN => 'Admin'
         ];
     }
+
+    public static function statussesList() :array
+    {
+        return [
+          self::STATUS_WAIT => 'Waiting' ,
+          self::STATUS_ACTIVE => 'Active'
+        ];
+    }
+
+    public  static function sortOrderList() :array
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'email' => 'Email',
+            'status' => 'Status',
+            'role' => 'Role'
+        ];
+    }
+
+
 
     public static function register(string  $name, string $email, string  $password): self
     {

@@ -2,7 +2,7 @@
 
 @section('content')
     @include('admin.users._nav')
-<h2>Create user</h2>
+
     <form method="post" action="{{route('admin.users.store')}}">
         @csrf
         <div class="form-group">
@@ -25,10 +25,10 @@
             <label for="role" class="col-form-label">Role</label>
             <select name="role" id="role" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}">
                 @foreach($roles as $value => $label)
-                    <option value="{{ $value }}"{{$value === old('role',$user->role) ? ' selected' : ''}}>{{ $label }}</option>
+                    <option value="{{ $value }}"{{$value === old('role') ? ' selected' : ''}}>{{ $label }}</option>
                 @endforeach
             </select>
-            @if($error->has('role'))
+            @if($errors->has('role'))
                 <span class="invalid-feedback"><strong>{{$errors->first('role')}}</strong></span>
             @endif
         </div>

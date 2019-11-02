@@ -23,16 +23,51 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id','desc')->paginate(20);
-        return view('admin.users.index',compact('users'));
+
+        if (!empty($request->get('order_by') && $request->get('order')))
+        {   $order_by = $request->get('order_by');
+            $order = $request->get('order');
+            $query = User::orderBy($order_by,$order);
+        }
+         else $query = User::orderByDesc('id');
+
+
+        if(!empty($value = $request->get('id'))) {
+            $query->where('id', $value);
+        }
+        if (!empty($value = $request->get('name'))){
+            $query->where('name','like','%'.$value.'%');
+        }
+
+        if (!empty($value = $request->get('email'))){
+            $query->where('email','like','%'.$value.'%');
+        }
+
+        if (!empty($value =  $request->get('status'))){
+            $query->where('status',$value);
+        }
+
+        if (!empty($value = $request->get('role'))){
+            $query->where('role',$value);
+        }
+
+
+       // dd($order_by);
+        $users = $query->paginate(10);
+
+        $statuses = User::statussesList();
+        $sort_list = User::sortOrderList();
+        $roles = User::roleList();
+        return view('admin.users.index',compact('users','statuses','roles','sort_list'));
     }
 
 
     public function create()
     {
-        return view('admin.users.create');
+        $roles = User::roleList();
+        return view('admin.users.create',compact('roles'));
     }
 
 
@@ -42,10 +77,10 @@ class UsersController extends Controller
         $user = User::create($request->only(['name','email']) + [
                 'password'=> bcrypt(Str::random()),
                 'status' => User::STATUS_ACTIVE,
-                'role' => User::ROLE_USER
+                'role' => $request->get('role')
             ]);
 
-        return redirect()->route('admin.users.show',$user);
+        return redirect()->route('admin.users.show',compact('user'));
     }
 
 
