@@ -32,7 +32,17 @@
                 <span class="invalid-feedback"> <strong>{{$errors->first('email')}}</strong></span>
             @endif
         </div>
-
+        <div class="form-group">
+            <label for="role" class="col-form-label">Role</label>
+            <select name="role" id="role" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}">
+                @foreach($roles as $value => $label)
+                    <option value="{{ $value }}"{{ $value === old('role',$user->role) ? ' selected' : ''}}>{{ $label }}</option>
+                @endforeach
+            </select>
+            @if($errors->has('role'))
+                <span class="invalid-feedback"><strong>{{$errors->first('role')}}</strong></span>
+            @endif
+        </div>
 
 
         <div class="form-group">

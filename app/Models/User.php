@@ -42,6 +42,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function roleList()
+    {
+        return [
+            self::ROLE_USER => 'User',
+            self::ROLE_ADMIN => 'Admin'
+        ];
+    }
+
     public static function register(string  $name, string $email, string  $password): self
     {
         return static ::create([
@@ -132,4 +140,6 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_ADMIN;
     }
+
+
 }

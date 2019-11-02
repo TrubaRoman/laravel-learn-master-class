@@ -42,6 +42,7 @@ class UsersController extends Controller
         $user = User::create($request->only(['name','email']) + [
                 'password'=> bcrypt(Str::random()),
                 'status' => User::STATUS_ACTIVE,
+                'role' => User::ROLE_USER
             ]);
 
         return redirect()->route('admin.users.show',$user);
@@ -57,7 +58,9 @@ class UsersController extends Controller
     public function edit(User $user)
     {
 
-        return view('admin.users.edit',compact('user'));
+        $roles = User::roleList();
+
+        return view('admin.users.edit',compact('user','roles'));
     }
 
 
@@ -65,6 +68,10 @@ class UsersController extends Controller
     {
 
         $user->update($request->only(['name','email','status']));
+
+        if ($request['role'] !== $user->role){
+            $user->changeRole($request['role']);
+        }
 
         return redirect()->route('admin.users.show',$user);
     }
