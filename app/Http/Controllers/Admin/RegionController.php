@@ -15,7 +15,7 @@ use function Symfony\Component\Debug\Tests\testHeader;
 /**
  * Class UsersController
  * @package App\Http\Controllers\Admin
- * @property User $user
+ * @property Region $region
  */
 
 class RegionController extends Controller
@@ -29,7 +29,7 @@ class RegionController extends Controller
 
     public function index()
     {
-        $regions = Region::where('parent_id',null)->orderBy('name')->get();
+        $regions = Region::orderBy('name')->paginate(30);
 
         return view('admin.regions.index',compact('regions'));
     }
@@ -37,13 +37,7 @@ class RegionController extends Controller
 
     public function create(Request $request)
     {
-        $parent = null;
-
-        if($request->get('parent')){
-            $parent = Region::findOrFail($request->get('parent'));
-        }
-
-        return view('admin.regions.create',compact('parent'));
+        return view('admin.regions.create');
     }
 
 
@@ -58,7 +52,7 @@ class RegionController extends Controller
         $region = Region::create([
             'name' => $request['name'],
             'slug' => $request['slug'],
-            'parent_id' => $request['parent_id']
+            'parent_id' => $request['parent']
          ]);
 
         return redirect()->route('admin.regions.show',$region);
@@ -69,12 +63,12 @@ class RegionController extends Controller
     {
         $regions = Region::where('parent_id',$region->id)->orderBy('name')->get();
 
-        return view('admin.users.show',compact('region','regions'));
+        return view('admin.regions.show',compact('region','regions'));
     }
 
     public function edit(Region $region)
     {
-        return view('admin.region.edit',compact('region'));
+        return view('admin.regions.edit',compact('region'));
     }
 
 
