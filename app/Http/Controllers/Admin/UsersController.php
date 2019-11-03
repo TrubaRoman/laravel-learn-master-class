@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use App\Models\User;
+use App\UseCases\Auth\RegisterService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -23,6 +24,15 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $register;
+
+    public function __construct(RegisterService $register)
+    {
+        $this-> register = $register;
+//        $this->middleware('can:users-manage');
+    }
+
     public function index(Request $request)
     {
 
