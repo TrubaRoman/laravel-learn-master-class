@@ -90,7 +90,7 @@ class UsersController extends Controller
                 'role' => $request->get('role')
             ]);
 
-        return redirect()->route('admin.users.show',compact('user'));
+        return redirect()->route('admin.users.show',$user);
     }
 
 
