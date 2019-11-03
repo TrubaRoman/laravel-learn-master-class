@@ -25,10 +25,11 @@
             <th>Slug</th> <td>{{ $region->slug}}</td>
         </tr>
 
-        <tr>
-            <th>Parent</th><td>{{ $region->parent ? $region->parent->name: '' }}</td>
-        </tr>
         </tbody>
     </table>
 
+    <br>
+@if(!empty($region->children))
+@include('admin.regions._list_regions',['regions' => $region->children])
+@endif
 @endsection

@@ -2,6 +2,7 @@
     use App\Models\User;
     use App\Models\Region;
     use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Crumbs;
+    use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 // Home
     Breadcrumbs::for('home', function ($trail) {
@@ -80,7 +81,12 @@
     });
 
     Breadcrumbs::for('admin.regions.show',function ($trail,Region $region){
-        $trail->parent('admin.regions.index');
+        if ($parent = $region->parent)
+        {
+            $trail->parent('admin.regions.show',$parent);
+        } else {
+            $trail->parent('admin.regions.index');
+        }
         $trail->push($region->name, route('admin.regions.show',$region));
     });
 
