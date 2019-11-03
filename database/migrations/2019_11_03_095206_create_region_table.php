@@ -13,9 +13,14 @@ class CreateRegionTable extends Migration
      */
     public function up()
     {
-        Schema::create('region', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->index();
+            $table->string('slug');
+            $table->integer('parent_id')->nullable()->references('id')->on('regions')->onDelete('CASCADE');
             $table->timestamps();
+            $table->unique(['parent_id','slug']);
+            $table->unique(['parent_id','name']);
         });
     }
 
@@ -26,6 +31,6 @@ class CreateRegionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('region');
+        Schema::dropIfExists('regions');
     }
 }
