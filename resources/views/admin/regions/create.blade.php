@@ -1,9 +1,9 @@
 @extends('admin.layouts.admin_app')
 
 @section('content')
-    @include('admin.users._nav')
+    @include('admin.regions._nav')
 
-    <form method="post" action="{{route('admin.users.store')}}">
+    <form method="post" action="{{route('admin.regions.store',['parent' => $parent ? $parent->id : null]) }}">
         @csrf
         <div class="form-group">
             <label for="name" class="col-form-label">Name</label>
@@ -15,23 +15,13 @@
         </div>
 
         <div class="form-group">
-            <label for="email" class="col-form-label">E-Mail Address</label>
-            <input id="email" name="email" type="email" class="form-control{{$errors->has('email') ? ' is_invalid' : ''}}"  value="{{old('email')}}" required >
-        @if($errors->has('email'))
-            <span class="invalid-feedback"> <strong>{{$errors->first('email')}}</strong></span>
+            <label for="slug" class="col-form-label">Slug</label>
+            <input id="slug" name="slug" type="slug" class="form-control{{$errors->has('slug') ? ' is_invalid' : ''}}"  value="{{old('slug')}}" required >
+        @if($errors->has('slug'))
+            <span class="invalid-feedback"> <strong>{{$errors->first('slug')}}</strong></span>
         @endif
         </div>
-        <div class="form-group">
-            <label for="role" class="col-form-label">Role</label>
-            <select name="role" id="role" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}">
-                @foreach($roles as $value => $label)
-                    <option value="{{ $value }}"{{$value === old('role') ? ' selected' : ''}}>{{ $label }}</option>
-                @endforeach
-            </select>
-            @if($errors->has('role'))
-                <span class="invalid-feedback"><strong>{{$errors->first('role')}}</strong></span>
-            @endif
-        </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

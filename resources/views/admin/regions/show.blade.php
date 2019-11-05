@@ -29,6 +29,7 @@
     </table>
 
     <br>
+    <p><a href="{{ route('admin.regions.create', ['parent' => $region->id]) }}" class="btn btn-success">Add SubRegion</a></p>
 @if(!empty($region->children))
 @include('admin.regions._list_regions',['regions' => $region->children])
 @endif

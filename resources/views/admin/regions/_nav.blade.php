@@ -5,4 +5,4 @@
 
 </ul>
 
-<a href="{{ route('admin.regions.create') }}" class="btn btn-info  mb-3" > Add region</a>
+{{--<a href="{{ route('admin.regions.create') }}" class="btn btn-info  mb-3" > Add region</a>--}}
