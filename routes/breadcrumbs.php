@@ -1,6 +1,7 @@
 <?php
     use App\Models\User;
     use App\Models\Region;
+    use App\Models\Adverts\Category;
     use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Crumbs;
     use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
@@ -94,4 +95,29 @@
         $trail->parent('admin.regions.show',$region);
         $trail->push('Edit',route('admin.regions.edit',$region));
     });
+  ///////////////////////////////_ADMIN_ADVERTS_CATEGORIES_////////////////////////////////////
 
+    Breadcrumbs::for('admin.adverts.categories.index',function ($trail){
+        $trail->parent('admin.home');
+        $trail->push('Categories', route('admin.adverts.categories.index'));
+    });
+
+    Breadcrumbs::for('admin.adverts.categories.create',function ($trail){
+        $trail->parent('admin.adverts.categories.index');
+        $trail->push('Create',route('admin.adverts.categories.create'));
+    });
+
+    Breadcrumbs::for('admin.adverts.categories.show',function ($trail,Category $category){
+        if ($parent = $category->parent)
+        {
+            $trail->parent('admin.adverts.categories.show',$parent);
+        } else {
+            $trail->parent('admin.adverts.categories.index');
+        }
+        $trail->push($category->name, route('admin.adverts.categories.show',$category));
+    });
+
+    Breadcrumbs::for('admin.adverts.categories.edit',function ($trail,Category $category){
+        $trail->parent('admin.adverts.categories.show',$category);
+        $trail->push('Edit',route('admin.adverts.categories.edit',$category));
+    });
