@@ -2,7 +2,7 @@
     <li class="nav-item"><a href="{{route('admin.home')}}" class="nav-link">Dashboard</a></li>
     <li class="nav-item"><a href="{{route('admin.users.index')}}" class="nav-link">Users</a></li>
     <li class="nav-item"><a href="{{route('admin.regions.index')}}" class="nav-link ">Regions</a></li>
-    <li class="nav-item"><a href="{{route('admin.adverts.categories.index')}}" class="nav-link active">Adverts Categories</a></li>
+    <li class="nav-item"><a href="{{route('admin.adverts.categories.index')}}" class="nav-link active">Category</a></li>
 
 </ul>
 

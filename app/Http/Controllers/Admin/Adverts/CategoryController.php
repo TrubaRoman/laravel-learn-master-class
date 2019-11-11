@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Adverts;
 use App\Http\Controllers\Controller;
 use App\Models\Adverts\Category;
 use Illuminate\Http\Request;
+use Mockery\Generator\CachingGenerator;
 
 class CategoryController extends Controller
 {
@@ -68,12 +69,46 @@ class CategoryController extends Controller
        return redirect()->route('admin.adverts.categories.show',$category);
    }
 
-   public function destroy(Category  $category)
+
+
+   public function first( Category $category)
    {
-       $category->delete();
+        if ($first = $category->siblings()->defaultOrder()->first())
+        {
+            $category->insertBeforeNode($first);
+        }
+       return redirect()->route('admin.adverts.categories.index');
+   }
+
+   public function up(Category $category)
+   {
+        $category->up();
+
+        return redirect()->route('admin.adverts.categories.index');
+   }
+
+   public function down(Category $category)
+   {
+       $category->down();
 
        return redirect()->route('admin.adverts.categories.index');
    }
+
+   public function last(Category $category)
+   {
+       if($last = $category->siblings()->defaultOrder('desc')->first())
+       {
+           $category->insertAfterNode($last);
+       }
+       return redirect()->route('admin.adverts.categories.index');
+   }
+
+    public function destroy(Category  $category)
+    {
+        $category->delete();
+
+        return redirect()->route('admin.adverts.categories.index');
+    }
 
 
 }
