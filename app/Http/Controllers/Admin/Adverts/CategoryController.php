@@ -18,9 +18,9 @@ class CategoryController extends Controller
 
    public function create()
    {
-      $parent = Category::defaultOrder()->widthDepth()->get();
+      $parents = Category::defaultOrder()->withDepth()->get();
 
-      return view('admin.adverts.categories.create',compact('parent'));
+      return view('admin.adverts.categories.create',compact('parents'));
    }
 
 
@@ -42,7 +42,8 @@ class CategoryController extends Controller
 
    public function show(Category $category)
    {
-       return view('admin.adverts.categories.show',compact('category'));
+       $attributes = $category->attributes()->orderBy('sort')->get();
+       return view('admin.adverts.categories.show',compact('category','attributes'));
    }
 
    public function edit(Category $category)

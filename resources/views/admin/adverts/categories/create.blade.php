@@ -3,7 +3,7 @@
 @section('content')
     @include('admin.adverts.categories._nav')
 
-    <form method="post" action="{{route('admin.adverts.categories.store' }}">
+    <form method="post" action="{{route('admin.adverts.categories.store') }}">
         @csrf
         <div class="form-group">
             <label for="name" class="col-form-label">Name</label>
@@ -24,8 +24,7 @@
 
         <div class="form-group">
             <label for="parent" class="col-form-label">Parent</label>
-
-        </div><select id="parent" class="form-control{{ $errors->has('parent') ? ' is-invalid' : '' }}" name="parent">
+            <select id="parent" class="form-control{{ $errors->has('parent') ? ' is-invalid' : '' }}" name="parent">
             <option value=""></option>
             @foreach ($parents as $parent)
                 <option value="{{ $parent->id }}"{{ $parent->id == old('parent') ? ' selected' : '' }}>
@@ -33,11 +32,12 @@
                     {{ $parent->name }}
                 </option>
             @endforeach;
-        </select>
-        @if ($errors->has('parent'))
-            <span class="invalid-feedback"><strong>{{ $errors->first('parent') }}</strong></span>
-        @endif
+            </select>
+            @if ($errors->has('parent'))
+                <span class="invalid-feedback"><strong>{{ $errors->first('parent') }}</strong></span>
+            @endif
 
+        </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

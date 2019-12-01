@@ -27,4 +27,9 @@ class Category extends Model
 
     protected $fillable = ['name','slug','parent_id'];
 
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class,'category_id','id');
+    }
+
 }

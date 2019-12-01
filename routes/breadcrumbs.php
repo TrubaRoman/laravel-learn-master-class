@@ -1,4 +1,6 @@
 <?php
+
+    use App\Models\Adverts\Attribute;
     use App\Models\User;
     use App\Models\Region;
     use App\Models\Adverts\Category;
@@ -120,4 +122,21 @@
     Breadcrumbs::for('admin.adverts.categories.edit',function ($trail,Category $category){
         $trail->parent('admin.adverts.categories.show',$category);
         $trail->push('Edit',route('admin.adverts.categories.edit',$category));
+    });
+
+    ///////////////_ADMIN_ADVERTS_CATEGORIES_ATTRIBUTES_-\\\\\\\\\\\\
+
+    Breadcrumbs::for('admin.adverts.categories.attributes.create',function ($trail,Category $category){
+        $trail->parent('admin.adverts.categories.show',$category);
+        $trail->push('Create',route('admin.adverts.categories.attributes.create',$category));
+    });
+
+    Breadcrumbs::for('admin.adverts.categories.attributes.show',function ($trail,Category $category,Attribute $attribute){
+        $trail->parent('admin.adverts.categories.show',$category);
+        $trail->push($attribute->name,route('admin.adverts.categories.attributes.create',[$category,$attribute]));
+    });
+
+    Breadcrumbs::for('admin.adverts.categories.attributes.edit',function ($trail,Category $category, Attribute $attribute){
+        $trail->parent('admin.adverts.categories.attributes.show',$category,$attribute);
+        $trail->push('Edit',route('admin.adverts.categories.attributes.edit',[$category,$attribute]));
     });

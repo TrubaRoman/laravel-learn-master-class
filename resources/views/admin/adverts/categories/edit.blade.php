@@ -17,7 +17,7 @@
 
         <div class="form-group">
             <label for="slug" class="col-form-label">Slug </label>
-            <input id="slug" class="form-control{{$errors->has('slug') ? ' is_invalid' : ''}}" name="slug" value="{{old('slug',$category->slug)}} required">
+            <input id="slug" class="form-control{{$errors->has('slug') ? ' is_invalid' : ''}}" name="slug" value="{{old('slug',$category->slug)}}" REQUIRED>
             @if($errors->has('slug'))
                 <span class="invalid-feedback"><strong>{{$errors->first('slug')}}</strong></span>
             @endif
